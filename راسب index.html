@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة نتائج الطلاب | NTU</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f0f2f5; margin: 0; padding: 15px; display: flex; justify-content: center; }
+        .app-container { width: 100%; max-width: 400px; background: #1e4b8d; border-radius: 25px; overflow: hidden; box-shadow: 0 12px 30px rgba(0,0,0,0.2); position: relative; }
+        
+        /* واجهة الدخول */
+        #login-screen { background: white; margin: 20px; padding: 25px; border-radius: 20px; text-align: center; }
+        .uni-logo-small { width: 120px; margin-bottom: 15px; }
+        input { width: 90%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 10px; text-align: center; font-size: 16px; outline: none; }
+        input:focus { border-color: #1e4b8d; border-width: 2px; }
+        .btn-entry { background: #e74c3c; color: white; border: none; padding: 12px; border-radius: 12px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px; }
+
+        /* واجهة النتيجة */
+        .header-section { text-align: center; padding: 25px 15px; color: white; }
+        .student-icon { font-size: 40px; margin-bottom: 10px; }
+        .student-name { font-size: 1.5rem; font-weight: bold; margin-bottom: 20px; }
+        
+        .info-box { background: rgba(255,255,255,0.1); margin: 8px 15px; padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); }
+        .label { display: block; font-size: 0.75rem; color: #cbdcf7; margin-bottom: 4px; }
+        .value { display: block; font-size: 1rem; color: white; font-weight: 500; }
+
+        .results-card { background: white; margin: 20px 15px; border-radius: 20px; padding: 15px; }
+        .results-header { color: #1e4b8d; font-weight: bold; border-bottom: 2px solid #f0f2f5; padding-bottom: 10px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        
+        .subject-row { display: flex; justify-content: space-between; padding: 12px 5px; border-bottom: 1px solid #f8f9fa; }
+        .subject-name { color: #444; font-size: 0.95rem; }
+        .subject-grade { font-weight: bold; color: #222; }
+
+        .logout-btn { background: #ff4d4d; color: white; border: none; padding: 10px 25px; border-radius: 50px; margin: 10px auto 25px; display: block; cursor: pointer; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div id="login-screen">
+        <img src="https://ntu.edu.iq/wp-content/uploads/2021/08/logo-ntu-1.png" class="uni-logo-small" alt="NTU">
+        <h3 style="color: #1e4b8d; margin-top: 0;">بوابة النتائج الالكترونية</h3>
+        
+        <input type="text" id="nameField" placeholder="أدخل اسم الطالب الرباعي">
+        
+        <input type="password" id="passField" placeholder="أدخل الرقم السري">
+        
+        <button class="btn-entry" onclick="showResult()">عرض النتيجة</button>
+    </div>
+
+    <div id="result-screen" class="hidden">
+        <div class="header-section">
+            <div class="student-icon">🎓</div>
+            <div class="student-name" id="displayStudentName"></div>
+        </div>
+
+        <div class="info-box">
+            <span class="label">الكلية</span>
+            <span class="value">الكلية التقنية الهندسية كركوك</span>
+        </div>
+        <div class="info-box">
+            <span class="label">القسم</span>
+            <span class="value">قسم هندسة تقنيات الالكترونيك والسيطرة</span>
+        </div>
+        <div class="info-box">
+            <span class="label">المرحلة</span>
+            <span class="value">المرحلة الثانية</span>
+        </div>
+
+        <div class="results-card">
+            <div class="results-header">📝 تفاصيل الدرجات</div>
+            
+            <div class="subject-row">
+                <span class="subject-name">الالكترونيك الرقمي</span>
+                <span class="subject-grade">جيد</span>
+            </div>
+            <div class="subject-row">
+                <span class="subject-name">الدوائر الالكترونية</span>
+                <span class="subject-grade">راسب</span>
+            </div>
+            <div class="subject-row">
+                <span class="subject-name">جرائم نظام البعث في العراق</span>
+                <span class="subject-grade">جيد جداً</span>
+            </div>
+            <div class="subject-row">
+                <span class="subject-name">لغة برمجة</span>
+                <span class="subject-grade">جيد</span>
+            </div>
+            <div class="subject-row">
+                <span class="subject-name">معادلات تفاضلية</span>
+                <span class="subject-grade" >مقبول</span>
+            </div>
+        </div>
+
+        <button class="logout-btn" onclick="location.reload()">تسجيل الخروج</button>
+    </div>
+</div>
+
+<script>
+    function showResult() {
+        const name = document.getElementById('nameField').value;
+        const password = document.getElementById('passField').value;
+        
+        // التحقق من الاسم والرقم السري
+        if(name.trim().length < 3) {
+            alert("الرجاء كتابة الاسم الكامل أولاً");
+        } 
+        else if(password === "12345678") {
+            document.getElementById('displayStudentName').innerText = name;
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+        } 
+        else {
+            alert("الرقم السري غير صحيح!");
+        }
+    }
+</script>
+
+</body>
+</html>
+
